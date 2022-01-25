@@ -1,0 +1,15 @@
+---
+- name: Discover devices
+  hosts: all
+  vars:
+    disks: []
+
+  tasks:
+    - name: Get disks
+      set_fact:
+        disks: "{{ disks + [item.key] }}"
+      loop: "{{ ansible_facts.devices|dict2items }}"
+
+    - name: Print discovered disks
+      debug:
+        msg: "{{ disks }}"
